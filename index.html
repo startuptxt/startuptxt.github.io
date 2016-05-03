@@ -2,11 +2,26 @@
 <html>
 <head>
 	<title>Startup.txt</title>
+	<meta charset="utf-8">
 </head>
 <body>
-	<p><q>
-		THE COMPANIES THAT WORK ARE THE ONES THAT PEOPLE REALLY CARE ABOUT AND HAVE A VISION FOR THE WORLD SO DO SOMETHING YOU LIKE.
-	</q>- Mark</p>
-	<
+	<p id="loading">Loading...</p>
+	<h2 id="quote"></h2>
+	<p id="author"></p>
+	<button id="author" onclick="randomquote()">More</button>
+	<script type="text/javascript" src="quotes.js"></script>
+	<script type="text/javascript">
+
+		var randomquote = function () {
+			n=Math.round(Math.random()*quotes.length);
+			document.getElementById('quote').innerHTML=quotes[n].quote;
+			document.getElementById('author').innerHTML=quotes[n].author;
+		}
+
+		if (quotes) {
+			document.getElementById('loading').style.display="none";
+			randomquote();
+		}
+	</script>
 </body>
 </html>
