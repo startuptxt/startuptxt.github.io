@@ -2,31 +2,96 @@
 <html>
 <head>
 	<title>Startup.txt</title>
-	<meta charset="utf-8">
-	<style>
-		body {
-			font-family: sans-serif;
+	<meta charset=utf-8>
+	<meta name=description content="Startup quotes">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		html, body {
+			height: 100%;
+			padding: 0;
+			margin:0;
+			font-family: 'Titillium Web', sans-serif;
+		}
+		.q {
+			height: calc(100% - 150px);
+			text-align: center;
+			padding: 50px 30%;
+		    display:flex;
+		    flex-direction: column;
+		    flex-wrap: nowrap;
+		    justify-content: center;
+		    align-content: center;
+		    align-items: center;
+		}
+		.q #number {
+			font-size: .9em;
+		}
+
+		.q #quote {
+			font-size: 1.8em; 
+			line-height: 1.5em;
+			text-transform: uppercase;
+			margin: 10px;
+		}
+		.nav {
+			position: fixed;
+			bottom:0;
+			width: 100%;
+			text-align: center;
+		}
+		button, button:active, button:focus {
+			border:none;
+			background: none;
+			outline: none;
+			font-family: 'Titillium Web', sans-serif;
+			font-size: .9em;
+			font-weight: 400;
+			padding: 8px;
+		}
+		button:hover {
+			color: #777;
+			cursor: pointer;
 		}
 	</style>
 </head>
 <body>
-	<p id="loading">Loading...</p>
-	<h2 id="quote"></h2>
-	<p id="author"></p>
-	<button id="author" onclick="randomquote()">More</button>
-	<script type="text/javascript" src="quotes.js"></script>
+	<div class="q">
+		<p id="loading">Loading...</p>
+		<p id="number"></p>
+		<h2 id="quote"></h2>
+		<p id="author"></p>
+	</div>
+	<div class="nav">
+		<button onclick="n-=1;display(n)"><</button>
+		<button onclick="randomquote()">Random</button>
+		<button onclick="n+=1;display(n)">></button>
+	</div>
+
+	<script type="text/javascript" src="d3.min.js"></script>
 	<script type="text/javascript">
 
-		var randomquote = function () {
-			n=Math.round(Math.random()*quotes.length);
-			document.getElementById('quote').innerHTML=quotes[n].quote;
-			document.getElementById('author').innerHTML=quotes[n].author;
-		}
+	var quotes=[],
+		n=0;
 
-		if (quotes) {
-			document.getElementById('loading').style.display="none";
-			randomquote();
-		}
+	d3.tsv("quotes.tsv", function(d) { 
+    	document.getElementById('loading').style.display="none";
+    	quotes=d;
+    	randomquote();
+	});
+
+	var randomquote = function () {
+		n=Math.round(Math.random()*quotes.length);
+		display(n);
+	};
+
+	var display = function (num) {
+		if (num<0) {num=0; n=0;}
+		document.getElementById('number').innerHTML=quotes.length-num;
+		document.getElementById('quote').innerHTML=quotes[num].quote;
+		document.getElementById('author').innerHTML=quotes[num].author;
+	};
+
 	</script>
 </body>
 </html>
