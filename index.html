@@ -89,10 +89,24 @@
 
 	var display = function (num) {
 		if (num<0) {num=0; n=0;}
+		if (num>quotes.length-1) {num=quotes.length-1; n=num;}
 		document.getElementById('number').innerHTML=quotes.length-num;
 		document.getElementById('quote').innerHTML=quotes[num].quote;
 		document.getElementById('author').innerHTML=quotes[num].author;
 	};
+
+	document.onkeydown = checkKey;
+	function checkKey(e) {
+	    e = e || window.event;
+	    if (e.keyCode == '37') {
+	       n-=1;
+	       display(n);
+	    }
+	    else if (e.keyCode == '39') {
+	       n+=1;
+	       display(n);
+	    }
+	}
 
 	</script>
 </body>
