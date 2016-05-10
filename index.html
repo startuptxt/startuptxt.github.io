@@ -63,9 +63,11 @@
 		<p id="author"></p>
 	</div>
 	<div class="nav">
+		<button onclick="n=0;display(n)">|<</button>
 		<button onclick="n-=1;display(n)"><</button>
 		<button onclick="randomquote()">Random</button>
 		<button onclick="n+=1;display(n)">></button>
+		<button onclick="n=quotes.length-1;display(n)">>|</button>
 	</div>
 
 	<script type="text/javascript" src="d3.min.js"></script>
